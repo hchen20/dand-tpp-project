@@ -11805,9 +11805,19 @@ Dependent variable: the response time</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>$$H_{0}: T_{congruent} &gt; T_{incongruent}$$
+<p>$$H_{0}: T_{congruent} = T_{incongruent}$$
 <br>
-$$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
+$$H_{a}: T_{congruent} &lt; T_{incongruent}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The null hypothesis states the response time for both congruent and ingcongruent word is the same. The alternative hypothesis states the response time for congruent word is less than the response time for incongruent word.</p>
+<p>We will perform sample t-test and assume the distributions to be normal.</p>
 
 </div>
 </div>
@@ -11823,7 +11833,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Perform the analysis here</span>
@@ -11831,6 +11841,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">math</span>
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
 <span class="c1"># Setting the seed to assure result is replicable</span>
@@ -11844,7 +11855,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Read in the data set and take a look at the top rows</span>
@@ -11862,7 +11873,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -11928,7 +11939,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
@@ -11944,7 +11955,7 @@ $$H_{null}: T_{congruent} &lt;= T_{incongruent}$$</p>
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[5]:</div>
+<div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -12047,7 +12058,7 @@ The mean and std response times  for Congruent words are less than the Incongrue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Build the visualizations for Congruent words</span>
@@ -12095,7 +12106,7 @@ The mean and std response times  for Congruent words are less than the Incongrue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Build the visualizations for Incongruent words</span>
@@ -12161,34 +12172,23 @@ The mean and std response times  for Congruent words are less than the Incongrue
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Perform the statistical test here</span>
 <span class="c1"># Based on this article http://www2.psychology.uiowa.edu/faculty/mordkoff/GradStats/part%201/I.07%20normal.pdf</span>
 <span class="c1"># The sample size greater than 30 to assume normality</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">30</span>
 
 <span class="n">df_sample</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="n">diff</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Congruent&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Incongruent&quot;</span><span class="p">]</span>
+<span class="n">diff</span> <span class="o">=</span> <span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Incongruent&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_sample</span><span class="p">[</span><span class="s2">&quot;Congruent&quot;</span><span class="p">]</span>
 <span class="n">sample_mean</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">sample_std</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
-</pre></div>
+<span class="n">SE</span> <span class="o">=</span> <span class="n">sample_std</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-</div>
-</div>
-</div>
+<span class="n">T</span> <span class="o">=</span> <span class="n">sample_mean</span><span class="o">/</span><span class="n">SE</span>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span>
-
-<span class="c1"># The cdf function provides probablity of a variable has value less than the sample mean</span>
-<span class="mi">1</span> <span class="o">-</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">sample_mean</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12201,15 +12201,13 @@ The mean and std response times  for Congruent words are less than the Incongrue
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[45]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0.9528004962997213</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>8.220568588888064
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -12220,7 +12218,16 @@ The mean and std response times  for Congruent words are less than the Incongrue
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Since we have confidence level of 95% and 95.28% is greater than the confidence level, we reject the  hypothesis and fail to reject the the null hypothesis that the response time for congruent word is greater than or equal to the response time of the incongruent word.</p>
+<p>The Critical value  for df = 29 and alpha = 0.05 is 1.699127 right-tailed.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Since since the t-value is greater than the critical value, we reject the null hypothesis and fail to reject the the alternative hypothesis that the response time for congruent word is less than the response time of the incongruent word.</p>
 
 </div>
 </div>
